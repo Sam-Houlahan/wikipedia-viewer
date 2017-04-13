@@ -1,8 +1,9 @@
-
+$(document).ready(function() { 
 
 
 
 function search() {
+  console.log('search');
 
   $.ajax({
      url: "https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&srsearch=" + $("#search").val(),
@@ -14,7 +15,14 @@ function search() {
      success: function(data) {
 
 
-console.log(data);
+//console.log(data.query.search);
+      var search = data.query.search;
+      
+      console.log(search, search.length);
+
+      for (var i = 0; i < search.length; i++) {
+        $('#results').append('<h3>' + search[i].title + '</h3><br/>' + '<p>' + search[i].snippet + '</p><br/>');
+      }
 
 
 
@@ -26,7 +34,9 @@ console.log(data);
    $('#search').keypress(function(e){
      console.log(e);
      if(e.keyCode == 13){//Enter key pressed
-       search();
+      console.log('click');
+      e.preventDefault();
+      search();
      }
    });
 
@@ -35,3 +45,5 @@ console.log(data);
   //       if(e.which == 13){//Enter key pressed
   //           search();
   //       $("#results").appendTo
+
+}); 
